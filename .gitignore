@@ -1,0 +1,16 @@
+.idea/
+*node_modules/
+
+__pycache__/
+*.p[codz]
+*$.py.class
+*dist/
+
+*.DS_Store
+
+.claude/
+.gemini/
+
+*.log
+
+storage/
