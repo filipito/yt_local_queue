@@ -17,6 +17,9 @@ class SearchResult(BaseModel):
     channel: str
     duration: int | None = None
     thumbnail_url: str | None = None
+    # Enriched metadata (null until fetched from music API)
+    artist: str | None = None
+    album: str | None = None
 
 
 class DownloadRequest(BaseModel):
