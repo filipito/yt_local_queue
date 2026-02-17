@@ -22,14 +22,14 @@ def _search_sync(query: str, max_results: int = 10) -> list[dict]:
 
     search_query = f"ytsearch{max_results}:{query}"
 
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:  # type: ignore[arg-type]
         result = ydl.extract_info(search_query, download=False)
 
     if not result or "entries" not in result:
         return []
 
     videos = []
-    for entry in result["entries"]:
+    for entry in result["entries"]:  # type: ignore[union-attr]
         if entry is None:
             continue
         videos.append(
@@ -77,7 +77,7 @@ def _download_sync(video_id: str, output_dir: str) -> dict | None:
     }
 
     try:
-        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:  # type: ignore[arg-type]
             info = ydl.extract_info(url, download=True)
         ext = "mp3"
     except Exception as e:
@@ -90,7 +90,7 @@ def _download_sync(video_id: str, output_dir: str) -> dict | None:
                 "quiet": True,
                 "no_warnings": True,
             }
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:  # type: ignore[arg-type]
                 info = ydl.extract_info(url, download=True)
             ext = info.get("ext", "webm")
         else:
@@ -110,7 +110,9 @@ def _download_sync(video_id: str, output_dir: str) -> dict | None:
     }
 
 
-async def download_audio(video_id: str, output_dir: str | Path | None = None) -> dict | None:
+async def download_audio(
+    video_id: str, output_dir: str | Path | None = None
+) -> dict | None:
     """Download audio from a YouTube video.
 
     Returns metadata dict with file_path on success, None on failure.
